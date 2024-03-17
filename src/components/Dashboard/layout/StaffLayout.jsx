@@ -42,7 +42,7 @@ export default function StaffLayout() {
                             <div className="card w-64 bg-[#1D232A] mx-2">
                                 <figure className="px-10 pt-5 py-5 avatar">
                                     <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                        <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                        <img src="https://cdn.pixabay.com/photo/2020/05/25/03/35/doctor-5216833_1280.png" />
                                     </div>
                                 </figure>
                                 <div className="card-body align-items-center pt-0">

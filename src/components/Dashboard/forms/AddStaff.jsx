@@ -4,8 +4,11 @@ import healthcare from '../../../assets/healthcare.svg'
 import Button from "../../Button";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const DoctorForm = () => {
   const { register, handleSubmit, setValue, watch } = useForm();
+  const navigate = useNavigate();
+
 
   const days = [
     { label: "S" },
@@ -27,6 +30,8 @@ const DoctorForm = () => {
       .catch((error) => {
         // Handle error
         console.error("Error:", error);
+        navigate('/');
+
       });
 
     // Convert the combined data into an array containing a single element
@@ -44,7 +49,7 @@ const DoctorForm = () => {
             className="flex flex-col items-center gap-3"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <h3>Create Staff</h3>
+            <h3 className="text-2xl font-extrabold text-black">Create Staff</h3>
 
             <div className="mt-5 flex flex-col items-start gap-3">
               <div className="flex flex-col lg:flex-row items-start gap-3">
@@ -58,6 +63,7 @@ const DoctorForm = () => {
                   <input
                     type="text"
                     placeholder="John"
+                    className="border-primary"
                     {...register("full_name")}
                   />
                 </div>
@@ -72,6 +78,7 @@ const DoctorForm = () => {
                   <input
                     type="text"
                     placeholder="build"
+                    className="border-primary"
                     {...register("expertise_category")}
                   />
                 </div>
@@ -89,6 +96,7 @@ const DoctorForm = () => {
                     type="number"
                     placeholder="6"
                     {...register("years_of_experience")}
+                    className="border-primary"
                   />
                 </div>
 
@@ -102,6 +110,7 @@ const DoctorForm = () => {
                   <input
                     type="text"
                     placeholder="Phlebotomist"
+                    className="border-primary"
                     {...register("designation")}
                   />
                 </div>
@@ -117,7 +126,7 @@ const DoctorForm = () => {
                   </label>
                   <input
                     type="number"
-                    className="w-full"
+                    className="w-full border-primary"
                     placeholder="+91999999999"
                     {...register("phone_number")}
                   />
@@ -133,7 +142,7 @@ const DoctorForm = () => {
                   <input
                     type="number"
                     placeholder="12"
-                    className="w-full"
+                    className="w-full border-primary"
                     {...register("age")}
                   />
                 </div>
@@ -149,7 +158,7 @@ const DoctorForm = () => {
                   </label>
                   <input
                     type="email"
-                    className="w-full"
+                    className="w-full border-primary"
                     placeholder="john@gmail.com"
                     {...register("email")}
                   />

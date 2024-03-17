@@ -2,7 +2,7 @@
 const Button = ({ title, className, onClick }) => {
     return (
         <button
-            className={`px-5 py-2 rounded-full bg-secondary text-background hover:bg-background hover:text-primary duration-500 border-2 border-secondary ${className}`}
+            className={`px-5 py-2 rounded-full btn text-background active:btn-primary duration-500 ${className}`}
             onClick={onClick}
         >
             {title}

@@ -1,15 +1,18 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import healthcare from '../../../assets/healthcare.svg'
 import Button from "../../Button";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+
 const CreateCamp = () => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [selectedStaffOptions, setSelectedStaffOptions] = useState([]);
-  const { register, handleSubmit, setValue, watch } = useForm();
+  const { register, handleSubmit, watch } = useForm();
   const [doctorsData, setDoctorsData] = useState([]);
   const [staffData, setStaffData] = useState([]);
+  const navigate = useNavigate();
+
 
   const selectedDate = watch("date");
   const date = new Date(selectedDate);
@@ -22,7 +25,6 @@ const CreateCamp = () => {
     console.log(dayName);
   }, [dayName]);
 
-  console.log("Selected Doctors", selectedOptions);
   const fetchDoctorsData = async (dayName) => {
     try {
       const response = await axios.get(
@@ -32,27 +34,11 @@ const CreateCamp = () => {
 
       setDoctorsData(response.data?.doctor_data);
       setStaffData(response.data?.staff_data);
-      const limitedDocData = {
-        full_name: doctorsData?.full_name,
-        meet_link: doctorsData?.meet_link,
-        slot: doctorsData?.slot,
-      };
-
-      console.log(limitedDocData);
-      // Assuming doctors data is in response.data.doctors and staff data is in response.data.staff
-      // Set the state variables accordingly
     } catch (error) {
       console.error(error);
     }
   };
 
-  const limitedDocData = {
-    full_name: doctorsData?.full_name,
-    meet_link: doctorsData?.meet_link,
-    slot: doctorsData?.slot,
-  };
-
-  console.log(limitedDocData);
   const handleCheckboxChange = (event) => {
     const { value, checked } = event.target;
     if (checked) {
@@ -61,6 +47,7 @@ const CreateCamp = () => {
       setSelectedOptions(selectedOptions.filter((option) => option !== value));
     }
   };
+
   const handleStaffCheckboxChange = (event) => {
     const { value, checked } = event.target;
     if (checked) {
@@ -71,11 +58,8 @@ const CreateCamp = () => {
       );
     }
   };
-  const onSubmit = async (data) => {
-    const ad = selectedOptions.map((c, i) => {
-      doctorsData.forEach(() => {});
-    });
 
+  const onSubmit = async (data) => {
     // Combine form data and additional data into a single object
     const finalCampData = {
       age_group: {
@@ -112,6 +96,7 @@ const CreateCamp = () => {
       .then((response) => {
         // Handle success
         console.log("Response:", response.data);
+        navigate('/');
       })
       .catch((error) => {
         // Handle error
@@ -122,308 +107,166 @@ const CreateCamp = () => {
 
     console.log("Final complete data: ", finalCampData);
   };
+
   return (
-    <div className="w-full  px-5 lg:px-10 py-10">
-      <div className="border-2 border-secondary p-5 rounded-xl">
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-28">
-          <img src={healthcare} width={600} height={600} />
+    <div className="w-full h-full px-5 lg:px-10 py-10 overflow-hidden">
+      <div className="border-2 border-primary p-5 rounded-xl">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-28">
+          <div className="h-full">
+            <img src={healthcare} alt="Healthcare" width={600} height={600} />
+          </div>
 
-          <form
-            className="flex flex-col items-center gap-3"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <h3>Create Camp</h3>
+          <div className="h-screen overflow-scroll">
+            <form className="flex flex-col items-center gap-6" onSubmit={handleSubmit(onSubmit)}>
+              <h3 className="text-2xl font-extrabold text-black">Create Camp</h3>
 
-            <div className="mt-5 flex flex-col items-center gap-3">
+              {/* Your form inputs here */}
+
+              {/* Camp Name and Theme */}
               <div className="flex flex-col lg:flex-row items-center gap-3">
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    Camp Name
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="build"
-                    {...register("camp_name")}
-                  />
+                {/* Camp Name */}
+                <div className="flex flex-col items-start gap-2 w-full lg:w-1/2">
+                  <label htmlFor="camp_name" className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">Camp Name</label>
+                  <input type="text" id="camp_name" {...register("camp_name")} className="py-2 px-3 border border-primary rounded-md w-full" />
                 </div>
-
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    Camp Theme
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="build"
-                    {...register("camp_theme")}
-                  />
+                {/* Camp Theme */}
+                <div className="flex flex-col items-start gap-2 w-full lg:w-1/2">
+                  <label htmlFor="camp_theme" className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">Camp Theme</label>
+                  <input type="text" id="camp_theme" {...register("camp_theme")} className="py-2 px-3 border border-primary rounded-md w-full" />
                 </div>
               </div>
 
+              {/* Camp Category and Disease Focus */}
               <div className="flex flex-col lg:flex-row items-center gap-3">
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    Camp Category
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="build"
-                    {...register("camp_category")}
-                  />
+                {/* Camp Category */}
+                <div className="flex flex-col items-start gap-2 w-full lg:w-1/2">
+                  <label htmlFor="camp_category" className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">Camp Category</label>
+                  <input type="text" id="camp_category" {...register("camp_category")} className="py-2 px-3 border border-primary rounded-md w-full" />
                 </div>
-
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    Disease Focus
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="build"
-                    {...register("disease_focus")}
-                  />
+                {/* Disease Focus */}
+                <div className="flex flex-col items-start gap-2 w-full lg:w-1/2">
+                  <label htmlFor="disease_focus" className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">Disease Focus</label>
+                  <input type="text" id="disease_focus" {...register("disease_focus")} className="py-2 px-3 border border-primary rounded-md w-full" />
                 </div>
               </div>
 
+              {/* Address, Pincode, Landmark, and Date */}
               <div className="flex flex-col lg:flex-row items-center gap-3">
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    Adddress
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="build"
-                    {...register("complete_address")}
-                  />
+                {/* Address */}
+                <div className="flex flex-col items-start gap-2 w-full lg:w-1/4">
+                  <label htmlFor="complete_address" className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">Address</label>
+                  <input type="text" id="complete_address" {...register("complete_address")} className="py-2 px-3 border border-primary rounded-md w-full" />
                 </div>
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    Pincode
-                  </label>
-                  <input
-                    type="number"
-                    placeholder="build"
-                    {...register("pincode")}
-                  />
-                </div>{" "}
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    Landmark
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="build"
-                    {...register("landmark")}
-                  />
+                {/* Pincode */}
+                <div className="flex flex-col items-start gap-2 w-full lg:w-1/4">
+                  <label htmlFor="pincode" className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">Pincode</label>
+                  <input type="number" id="pincode" {...register("pincode")} className="py-2 px-3 border border-primary rounded-md w-full" />
                 </div>
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    Date
-                  </label>
-                  <input
-                    type="date"
-                    placeholder="build"
-                    {...register("date")}
-                  />
+                {/* Landmark */}
+                <div className="flex flex-col items-start gap-2 w-full lg:w-1/4">
+                  <label htmlFor="landmark" className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">Landmark</label>
+                  <input type="text" id="landmark" {...register("landmark")} className="py-2 px-3 border border-primary rounded-md w-full" />
+                </div>
+                {/* Date */}
+                <div className="flex flex-col items-start gap-2 w-full lg:w-1/4">
+                  <label htmlFor="date" className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">Date</label>
+                  <input type="date" id="date" {...register("date")} className="py-2 px-3 border border-primary rounded-md w-full" />
                 </div>
               </div>
 
+              {/* Start Time, End Time, and Awareness Creation */}
               <div className="flex flex-col lg:flex-row items-center gap-3">
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    Start Time
-                  </label>
-                  <input
-                    type="time"
-                    placeholder="build"
-                    {...register("start_time")}
-                  />
+                {/* Start Time */}
+                <div className="flex flex-col items-start gap-2 w-full lg:w-1/3">
+                  <label htmlFor="start_time" className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">Start Time</label>
+                  <input type="time" id="start_time" {...register("start_time")} className="py-2 px-3 border border-primary rounded-md w-full" />
                 </div>
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    End Time
-                  </label>
-                  <input
-                    type="time"
-                    placeholder="build"
-                    {...register("end_time")}
-                  />
+                {/* End Time */}
+                <div className="flex flex-col items-start gap-2 w-full lg:w-1/3">
+                  <label htmlFor="end_time" className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">End Time</label>
+                  <input type="time" id="end_time" {...register("end_time")} className="py-2 px-3 border border-primary rounded-md w-full" />
                 </div>
-
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    Awareness Creation
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="build"
-                    {...register("awareness_creation")}
-                  />
+                {/* Awareness Creation */}
+                <div className="flex flex-col items-start gap-2 w-full lg:w-1/3">
+                  <label htmlFor="awareness_creation" className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">Awareness Creation</label>
+                  <input type="text" id="awareness_creation" {...register("awareness_creation")} className="py-2 px-3 border border-primary rounded-md w-full" />
                 </div>
               </div>
 
+              {/* Minimum and Maximum Age Group */}
               <div className="flex flex-col lg:flex-row items-center gap-3">
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    Minimum Age Group
-                  </label>
-                  <input
-                    type="number"
-                    placeholder="build"
-                    {...register("min_age")}
-                  />
+                {/* Minimum Age Group */}
+                <div className="flex flex-col items-start gap-2 w-full lg:w-1/2">
+                  <label htmlFor="min_age" className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">Minimum Age Group</label>
+                  <input type="number" id="min_age" {...register("min_age")} className="py-2 px-3 border border-primary rounded-md w-full" />
                 </div>
-
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    Maximum Age Group
-                  </label>
-                  <input
-                    type="number"
-                    placeholder="build"
-                    {...register("max_age")}
-                  />
-                </div>
-
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    Assigned Doctor
-                  </label>
-                </div>
-                <div>
-                  {doctorsData.map((doctor, index) => (
-                    <div key={index}>
-                      <input
-                        type="checkbox"
-                        id={`option${index}`}
-                        value={doctor.full_name}
-                        checked={selectedOptions.includes(doctor.full_name)}
-                        onChange={handleCheckboxChange}
-                      />
-                      <label htmlFor={`option${index}`}>
-                        {doctor.full_name}
-                      </label>
-                    </div>
-                  ))}
+                {/* Maximum Age Group */}
+                <div className="flex flex-col items-start gap-2 w-full lg:w-1/2">
+                  <label htmlFor="max_age" className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">Maximum Age Group</label>
+                  <input type="number" id="max_age" {...register("max_age")} className="py-2 px-3 border border-primary rounded-md w-full" />
                 </div>
               </div>
 
-              <div className="flex flex-col lg:flex-row items-center gap-3">
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    Assigned Staff
-                  </label>
-                </div>
-                <div>
-                  {staffData.map((option, index) => (
-                    <div key={index}>
-                      <input
-                        type="checkbox"
-                        id={`option${index}`}
-                        value={option.full_name}
-                        checked={selectedStaffOptions.includes(
-                          option.full_name
-                        )}
-                        onChange={handleStaffCheckboxChange}
-                      />
-                      <label htmlFor={`option${index}`}>
-                        {option.full_name}{" "}
-                      </label>
-                    </div>
-                  ))}
-                </div>
+              {/* Assigned Doctor */}
+              <div className="flex flex-col items-start gap-2">
+                <label className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">Assigned Doctor</label>
+                {doctorsData.map((doctor, index) => (
+                  <div key={index}>
+                    <input
+                      type="checkbox"
+                      id={`doctor${index}`}
+                      value={doctor.full_name}
+                      checked={selectedOptions.includes(doctor.full_name)}
+                      onChange={handleCheckboxChange}
+                      className="mr-2"
+                    />
+                    <label htmlFor={`doctor${index}`}>{doctor.full_name}</label>
+                  </div>
+                ))}
+              </div>
 
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    Camp Capacity
-                  </label>
-                  <input
-                    type="number"
-                    placeholder="build"
-                    {...register("camp_capacity")}
-                  />
+              {/* Assigned Staff */}
+              <div className="flex flex-col items-start gap-2">
+                <label className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">Assigned Staff</label>
+                {staffData.map((staff, index) => (
+                  <div key={index}>
+                    <input
+                      type="checkbox"
+                      id={`staff${index}`}
+                      value={staff.full_name}
+                      checked={selectedStaffOptions.includes(staff.full_name)}
+                      onChange={handleStaffCheckboxChange}
+                      className="mr-2"
+                    />
+                    <label htmlFor={`staff${index}`}>{staff.full_name}</label>
+                  </div>
+                ))}
+              </div>
+
+              {/* Camp Capacity */}
+              <div className="flex flex-col items-start gap-2">
+                <label htmlFor="camp_capacity" className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">Camp Capacity</label>
+                <input type="number" id="camp_capacity" {...register("camp_capacity")} className="py-2 px-3 border border-primary rounded-md w-full" />
+              </div>
+
+              {/* Expertise and Prerequisites */}
+              <div className="flex flex-col lg:flex-row items-center gap-3">
+                {/* Expertise */}
+                <div className="flex flex-col items-start gap-2 w-full lg:w-1/2">
+                  <label htmlFor="expertise" className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">Expertise</label>
+                  <input type="text" id="expertise" {...register("expertise")} className="py-2 px-3 border border-primary rounded-md w-full" />
+                </div>
+                {/* Prerequisites */}
+                <div className="flex flex-col items-start gap-2 w-full lg:w-1/2">
+                  <label htmlFor="prerequisites" className="block uppercase tracking-wide text-black text-xs font-semibold mb-1">Prerequisites</label>
+                  <input type="text" id="prerequisites" {...register("prerequisites")} className="py-2 px-3 border border-primary rounded-md w-full" />
                 </div>
               </div>
 
-              <div className="flex flex-col lg:flex-row items-center gap-3">
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    Expertise
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="build"
-                    {...register("expertise")}
-                  />
-                </div>
-
-                <div className="flex flex-col items-start gap-2">
-                  <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
-                    htmlFor="grid-first-name"
-                  >
-                    Prerequisites
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="build"
-                    {...register("prerequisites")}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <Button title="Create Camp" className="w-full" />
-          </form>
+              {/* Submit Button */}
+              <Button title="Create Camp" className="w-44" />
+            </form>
+          </div>
         </div>
       </div>
     </div>

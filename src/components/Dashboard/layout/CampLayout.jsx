@@ -33,6 +33,8 @@ export default function CampLayout() {
         fetchData();
     }, []);
 
+    
+
     return (
 
         <div className=" mt-4">

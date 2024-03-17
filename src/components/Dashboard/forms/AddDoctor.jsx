@@ -4,10 +4,14 @@ import healthcare from "../../../assets/healthcare.svg"
 import Button from "../../Button";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+
 const DoctorForm = () => {
   const { register, handleSubmit, setValue, watch } = useForm();
   const [doctors, setDoctors] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const navigate = useNavigate();
+
 
   const days = [
     { label: "S" },
@@ -29,6 +33,7 @@ const DoctorForm = () => {
       .then((response) => {
         // Handle success
         console.log("Response:", response.data);
+        navigate('/');
       })
       .catch((error) => {
         // Handle error
@@ -42,7 +47,7 @@ const DoctorForm = () => {
 
   return (
     <div className="w-full  px-5 lg:px-10 py-10">
-      <div className="border-2 border-secondary p-5 rounded-xl">
+      <div className="border-2 border-primary p-5 rounded-xl">
         <div className="flex flex-col lg:flex-row items-center justify-center gap-28">
           <img src={healthcare} width={600} height={600} />
 
@@ -50,13 +55,13 @@ const DoctorForm = () => {
             className="flex flex-col items-center gap-3"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <h3>Create Doctor</h3>
+            <h3 className="text-2xl font-extrabold text-black">Create Doctor</h3>
 
             <div className="mt-5 flex flex-col items-start gap-3">
               <div className="flex flex-col lg:flex-row items-start gap-3">
                 <div className="flex flex-col items-start gap-2">
                   <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
+                    className="block uppercase tracking-wide text-black text-xs font-bold mb-2"
                     htmlFor="grid-first-name"
                   >
                     Full Name
@@ -65,12 +70,13 @@ const DoctorForm = () => {
                     type="text"
                     placeholder="John"
                     {...register("full_name")}
+                    className="border-primary"
                   />
                 </div>
 
                 <div className="flex flex-col items-start gap-2">
                   <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
+                    className="block uppercase tracking-wide text-black text-xs font-bold mb-2"
                     htmlFor="grid-first-name"
                   >
                     Expertise Category
@@ -78,6 +84,7 @@ const DoctorForm = () => {
                   <input
                     type="text"
                     placeholder="build"
+                    className="border-primary"
                     {...register("expertise_category")}
                   />
                 </div>
@@ -85,7 +92,7 @@ const DoctorForm = () => {
 
               <div className="flex flex-col items-start gap-2">
                 <label
-                  className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
+                  className="block uppercase tracking-wide text-black text-xs font-bold mb-2"
                   htmlFor="grid-first-name"
                 >
                   Year of Experience
@@ -93,28 +100,29 @@ const DoctorForm = () => {
                 <input
                   type="number"
                   placeholder="5"
-                  {...register("years_of_experience")}
+                    className="border-primary"
+                    {...register("years_of_experience")}
                 />
               </div>
 
               <div className="flex flex-col lg:flex-row items-start gap-3 w-full">
                 <div className="flex flex-col items-start gap-2">
                   <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
+                    className="block uppercase tracking-wide text-black text-xs font-bold mb-2"
                     htmlFor="grid-first-name"
                   >
                     Start Time
                   </label>
                   <input
                     type="time"
-                    className="w-full"
+                    className="w-full border-primary"
                     {...register("start_time")}
                   />
                 </div>
 
                 <div className="flex flex-col items-start gap-2">
                   <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
+                    className="block uppercase tracking-wide text-black text-xs font-bold mb-2"
                     htmlFor="grid-first-name"
                   >
                     End Time
@@ -122,7 +130,7 @@ const DoctorForm = () => {
                   <input
                     type="time"
                     placeholder="build"
-                    className="w-full"
+                    className="w-full border-primary"
                     {...register("end_time")}
                   />
                 </div>
@@ -131,14 +139,14 @@ const DoctorForm = () => {
               <div className="flex flex-col lg:flex-row items-start gap-3 w-full">
                 <div className="flex flex-col items-start gap-2">
                   <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
+                    className="block uppercase tracking-wide text-black text-xs font-bold mb-2"
                     htmlFor="grid-first-name"
                   >
                     Phone Number
                   </label>
                   <input
                     type="number"
-                    className="w-full"
+                    className="w-full border-primary"
                     placeholder="+91999999999"
                     {...register("phone_number")}
                   />
@@ -146,7 +154,7 @@ const DoctorForm = () => {
 
                 <div className="flex flex-col items-start gap-2">
                   <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
+                    className="block uppercase tracking-wide text-black text-xs font-bold mb-2"
                     htmlFor="grid-first-name"
                   >
                     Age
@@ -154,7 +162,7 @@ const DoctorForm = () => {
                   <input
                     type="number"
                     placeholder="12"
-                    className="w-full"
+                    className="w-full border-primary" 
                     {...register("age")}
                   />
                 </div>
@@ -163,14 +171,14 @@ const DoctorForm = () => {
               <div className="flex flex-col lg:flex-row items-start gap-3 w-full">
                 <div className="flex flex-col items-start gap-2">
                   <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
+                    className="block uppercase tracking-wide text-black text-xs font-bold mb-2"
                     htmlFor="grid-first-name"
                   >
                     Email
                   </label>
                   <input
                     type="email"
-                    className="w-full"
+                    className="w-full border-primary"
                     placeholder="john@gmail.com"
                     {...register("email")}
                   />
@@ -178,7 +186,7 @@ const DoctorForm = () => {
 
                 <div className="flex flex-col items-start gap-2">
                   <label
-                    className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
+                    className="block uppercase tracking-wide text-black text-xs font-bold mb-2"
                     htmlFor="grid-first-name"
                   >
                     Google Meet Link
@@ -186,7 +194,7 @@ const DoctorForm = () => {
                   <input
                     type="text"
                     placeholder="https://meet.google.com/htx-hddf-mhg"
-                    className="w-full"
+                    className="w-full border-primary"
                     {...register("meet_link")}
                   />
                 </div>
@@ -194,7 +202,7 @@ const DoctorForm = () => {
 
               <div className="flex flex-col items-start gap-2">
                 <label
-                  className="block uppercase tracking-wide text-primary text-xs font-bold mb-2"
+                  className="block uppercase tracking-wide text-black text-xs font-bold mb-2"
                   htmlFor="grid-first-name"
                 >
                   Unavailable Days
