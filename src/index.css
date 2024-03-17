@@ -4,6 +4,6 @@
 
 @layer base {
     input {
-        @apply p-3 bg-transparent border border-secondary rounded-xl outline-none;
+        @apply p-3 bg-transparent border rounded-xl outline-none text-gray-600;
     }
 }

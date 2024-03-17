@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react'
@@ -6,7 +7,7 @@ import DoctorLayout from './layout/DoctorLayout';
 import StaffLayout from './layout/StaffLayout';
 import { Link } from 'react-router-dom';
 
-export default function Camps() {
+export default function Camps({campCount, docCount, staffCount}) {
 
 
     return (
@@ -52,7 +53,7 @@ export default function Camps() {
                     </div>
                 </div>
 
-                <CampLayout />
+                <CampLayout campCount={campCount} />
 
                 <Link to="/add-camp">
                     <div className="divider divider-primary pt-6">
@@ -60,7 +61,7 @@ export default function Camps() {
                     </div>
                 </Link>
 
-                <DoctorLayout />
+                <DoctorLayout docCount={docCount}/>
 
                 <Link to="/add-doctors">
                     <div className="divider divider-primary pt-6">
@@ -71,7 +72,7 @@ export default function Camps() {
                 {/* <div className="">
                 </div> */}
 
-                <StaffLayout />
+                <StaffLayout staffCount={staffCount}/>
 
                 <Link to="/add-staff">
                     <div className="divider divider-primary pt-6">
