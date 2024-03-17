@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import Dashboard from "../Dashboard/index"
+import { Link } from 'react-router-dom'
 
 export default function SideBar() {
   return (
@@ -16,7 +17,10 @@ export default function SideBar() {
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-6 h-6 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
               </label>
             </div>
-            <div className="flex-1 px-2 mx-2">Sehat Sampark</div>
+            <div className="flex-1 px-2 mx-2">
+              <h1 className="text-3xl font-extrabold">Sehat Sampark</h1>
+            </div>
+
             <div className="flex-none hidden lg:block">
               <ul className="menu menu-horizontal">
                 {/* Navbar menu content here */}
@@ -38,10 +42,12 @@ export default function SideBar() {
 
         <div className="drawer-side">
           <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
-          <div className="menu w-72 h-full p-4 pr-0">
-            <ul className=" h-full  rounded-lg bg-black">
-              <li className=""><a>Sidebar Item 1</a></li>
-              <li><a>Sidebar Item 2</a></li>
+          <div className="menu w-72 h-full pr-0 bg-black">
+            <ul className=" h-full  rounded-lg p-2 align-items-center">
+              <li><a className="mx-auto hover:bg-gray-300 hover:text-black">Dashboard</a></li>
+              <li><a className="mx-auto hover:bg-gray-300 hover:text-black">Add Camp</a></li>
+              <Link to="/add-doctor">Onboard Doctor</Link>
+              <li><a className="mx-auto hover:bg-gray-300 hover:text-black">Onboard Staff</a></li>
             </ul>
           </div>
         </div>

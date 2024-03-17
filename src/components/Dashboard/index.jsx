@@ -4,13 +4,14 @@ import React, { useEffect, useState } from 'react'
 import CampLayout from './layout/CampLayout';
 import DoctorLayout from './layout/DoctorLayout';
 import StaffLayout from './layout/StaffLayout';
+import { Link } from 'react-router-dom';
 
 export default function Camps() {
 
 
     return (
         <div>
-            <div className="mt-4 pt-0">
+            <div className=" px-5 lg:px-10 py-10">
                 {/* <div className=" border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-4 pt-0 p-4"> */}
                 {/* <h1 className="text-3xl font-semibold text-gray-900 dark:text-white">Welcome to Flowbite</h1> */}
                 {/* <p className="mt-2 text-gray-700 dark:text-gray-300">This is your dashboard. You can customize it to suit your needs.</p> */}
@@ -25,7 +26,7 @@ export default function Camps() {
                             <div className="stat-value">11</div>
                             <div className="stat-desc">Mar 11th - Mar 17th</div>
                         </div>
-                        
+
                     </div>
 
                     <div className="stat">
@@ -53,24 +54,30 @@ export default function Camps() {
 
                 <CampLayout />
 
-                <div className="divider divider-primary pt-6">
-                    <button className="btn active:btn-primary">Add Camp</button>
-                </div>
+                <Link to="/add-camp">
+                    <div className="divider divider-primary pt-6">
+                        <button className="btn active:btn-primary">Add Camp</button>
+                    </div>
+                </Link>
 
                 <DoctorLayout />
 
-                <div className="divider divider-primary pt-6">
-                    <button className="btn active:btn-primary">Add Doctor</button>
-                </div>
+                <Link to="/add-doctors">
+                    <div className="divider divider-primary pt-6">
+                        <button className="btn active:btn-primary">Onboard Doctor</button>
+                    </div>
+                </Link>
 
                 {/* <div className="">
                 </div> */}
 
                 <StaffLayout />
 
-                <div className="divider divider-primary pt-6">
-                    <button className="btn active:btn-primary">Add Staff</button>
-                </div>
+                <Link to="/add-staff">
+                    <div className="divider divider-primary pt-6">
+                        <button className="btn active:btn-primary">Onboard Staff</button>
+                    </div>
+                </Link>
 
 
             </div>
